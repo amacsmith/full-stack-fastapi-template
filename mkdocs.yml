@@ -1,0 +1,136 @@
+site_name: Digital Human CEO Avatar
+site_description: Real-time AI-powered digital avatar system documentation
+site_url: https://digital-human.looptech.ai
+repo_url: https://github.com/looptech-ai/digital-human
+repo_name: looptech-ai/digital-human
+
+theme:
+  name: material
+  palette:
+    # Dark mode as default
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    # Light mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - toc.follow
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+    - content.code.select
+  
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quickstart.md
+    - Configuration: getting-started/configuration.md
+  - Architecture:
+    - System Overview: architecture/overview.md
+    - Frontend: architecture/frontend.md
+    - Backend: architecture/backend.md
+    - AI Pipeline: architecture/ai-pipeline.md
+    - Real-time Communication: architecture/webrtc.md
+  - Development:
+    - Setup: development/setup.md
+    - Frontend Development: development/frontend.md
+    - Backend Development: development/backend.md
+    - Testing: development/testing.md
+    - Contributing: development/contributing.md
+  - AI & ML:
+    - Model Architecture: ai/model-architecture.md
+    - Training Pipeline: ai/training.md
+    - NVIDIA Integration: ai/nvidia-stack.md
+    - Performance Optimization: ai/optimization.md
+  - API Reference:
+    - REST API: api/rest.md
+    - WebSocket API: api/websocket.md
+    - Authentication: api/authentication.md
+  - Deployment:
+    - Docker: deployment/docker.md
+    - Production: deployment/production.md
+    - Monitoring: deployment/monitoring.md
+  - Project Management:
+    - PRD: dev-workflow/PRD.md
+    - Development Rules: dev-workflow/rules.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/looptech-ai
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/r/looptech/digital-human
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: looptech-ai
+      repo: digital-human
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+  
+copyright: |
+  &copy; 2024 <a href="https://looptech.ai"  target="_blank" rel="noopener">LoopTech AI</a> 
