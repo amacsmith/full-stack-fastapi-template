@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
 
@@ -6,13 +6,13 @@ import {
   type Body_login_login_access_token as AccessToken,
   type ApiError,
   LoginService,
-  type UserPublic,
   type UserRegister,
   UsersService,
-} from "@/client"
-import { handleError } from "@/utils"
+} from "../client"
+import { handleError } from "../utils"
+import { useAuthStore } from "../stores/authStore"
 
-const isLoggedIn = () => {
+export const isLoggedIn = () => {
   return localStorage.getItem("access_token") !== null
 }
 
@@ -20,11 +20,7 @@ const useAuth = () => {
   const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { data: user } = useQuery<UserPublic | null, Error>({
-    queryKey: ["currentUser"],
-    queryFn: UsersService.readUserMe,
-    enabled: isLoggedIn(),
-  })
+  const { user, login: setAuth, logout: clearAuth, isAuthenticated } = useAuthStore()
 
   const signUpMutation = useMutation({
     mutationFn: (data: UserRegister) =>
@@ -45,13 +41,16 @@ const useAuth = () => {
     const response = await LoginService.loginAccessToken({
       formData: data,
     })
-    localStorage.setItem("access_token", response.access_token)
+    // Get user data after login
+    const userData = await UsersService.readUserMe()
+    setAuth(userData, response.access_token)
+    return response
   }
 
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: () => {
-      navigate({ to: "/" })
+      navigate({ to: "/dashboard" })
     },
     onError: (err: ApiError) => {
       handleError(err)
@@ -59,7 +58,8 @@ const useAuth = () => {
   })
 
   const logout = () => {
-    localStorage.removeItem("access_token")
+    clearAuth()
+    queryClient.clear()
     navigate({ to: "/login" })
   }
 
@@ -68,10 +68,10 @@ const useAuth = () => {
     loginMutation,
     logout,
     user,
+    isAuthenticated,
     error,
     resetError: () => setError(null),
   }
 }
 
-export { isLoggedIn }
 export default useAuth
